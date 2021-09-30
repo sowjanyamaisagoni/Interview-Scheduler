@@ -164,23 +164,23 @@ storiesOf("InterviewerList", module)
         onClose={action("onClose")}
       />
     ))
-storiesOf('Form', module)
-	.addParameters({
-		backgrounds: [{ name: 'white', value: '#fff', default: true }],
-	})
-	.add('Create', () => (
-		<Form
-			interviewers={interviewers}
-			onSave={action('onSave')}
-			onCancel={action('onCancel')}
-		/>
-	))
-	.add('Edit', () => (
-		<Form
-			name={null}
-			interviewers={interviewers}
-			interviewer={interviewer.id}
-			onSave={action('onSave')}
-			onCancel={action('onCancel')}
-		/>
-	));
+storiesOf("Form", module)
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true }],
+  })
+  .add("Create", () => (
+    <Form
+      interviewers={interviewers}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />
+  ))
+  .add("Edit", () => (
+    <Form
+      name={"Archie Cohen"}
+      interviewers={interviewers}
+      interviewer={interviewer.id}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />
+  ));
