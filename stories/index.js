@@ -139,6 +139,22 @@ storiesOf("InterviewerList", module)
     })
     .add("Appointment", () => <Appointment />)
     .add("Appointment with Time", () => <Appointment time={"12PM"} />)
+    .add("Appointment Empty", () => (
+      <>
+        <Appointment id={1} time={"12PM"} />
+        <Appointment id={"last"} time={"1PM"} />
+      </>
+    ))
+    .add("Appointment Booked", () => (
+      <>
+        <Appointment
+          id={1}
+          time={"12PM"}
+          interview={{ student: "Lydia Miller-Jones", interviewer }}
+        />
+        <Appointment id={"last"} time={"1PM"} />
+      </>
+    ))
     .add("Header", () => <Header time={"12PM"} />)
     .add("Empty", () => <Empty onAdd={action("onAdd")} />)
     .add("Show", () => (
@@ -163,7 +179,7 @@ storiesOf("InterviewerList", module)
         message={"Could not delete appointment"}
         onClose={action("onClose")}
       />
-    ))
+    ));
 storiesOf("Form", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }],
