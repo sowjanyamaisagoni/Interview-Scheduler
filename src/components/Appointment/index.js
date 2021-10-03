@@ -11,15 +11,15 @@ function Appointment(props) {
   return (
     <article className="appointment">
       <Header time={time} />
-      {props.interview ? (
+      {interview ? (
         <Show
           student={interview.student}
           interviewer={interview.interviewer}
-          onEdit
-          onDelete
+          // onEdit
+          // onDelete
         />
       ) : (
-        <Empty onAdd />
+        <Empty />
       )}
     </article>
   );

@@ -17,14 +17,14 @@ export default function Application() {
     interviewers: {},
   });
 
-  const setDay = (day) => setState({ ...state, day });
+  const setDay = (day) => setState({...state,day});
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
     ]).then((all) => {
-      //console.log('all', all);
+      console.log('all', all);
       setState((prev) => ({
         ...prev,
         days: all[0].data,
@@ -35,6 +35,22 @@ export default function Application() {
   }, []);
 
   console.log("Application.js > today:", state.day);
+  
+    const appointments = getAppointmentsForDay(state, state.day).map((appointment) => {
+      const interview = getInterview(state, appointment.interview);
+      console.log("getInterview interview", interview);
+      console.log("appointment", appointment);
+
+      return (
+        <Appointment
+          {...appointment}
+          key={appointment.id}
+          interview={getInterview(state, appointment.interview)}
+          interviewers={getInterviewersForDay(state, state.day)}
+        />
+      );
+    });
+  
   return (
     <main className="layout">
       <section className="sidebar">
@@ -57,20 +73,7 @@ export default function Application() {
       </section>
       <section className="schedule">
         {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
-        {getAppointmentsForDay(state, state.day).map((appointment) => {
-          // const interview = getInterview(state, appointment.interview);
-          // console.log("getInterview interview", interview);
-          // console.log("appointment", appointment);
-
-          return (
-            <Appointment
-              {...appointment}
-              key={appointment.id}
-              interview={getInterview(state, appointment.interview)}
-              interviewers={getInterviewersForDay(state, state.day)}
-            />
-          );
-        })}
+        {appointments}
         {/* {appointments.map((appointment) => (
           <Appointment key={appointment.id} {...appointment} />
         ))} */}
