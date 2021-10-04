@@ -26,6 +26,6 @@ export function getInterviewersForDay(state, day) {
     const interviewersArr = selectedDayObj.interviewers.map(
       (interviewerId) => state.interviewers[interviewerId]
     );
-    return interviewersArr; // [array of {state.appointments} objects for the {day}]
+    return interviewersArr;
   }
-}
+} 

@@ -47,9 +47,30 @@ export default function Application() {
           key={appointment.id}
           interview={getInterview(state, appointment.interview)}
           interviewers={getInterviewersForDay(state, state.day)}
+          bookInterview={bookInterview}
         />
       );
     });
+  
+  function bookInterview(id, interview) {
+    console.log("bookInterview id", id); // id = 2
+    console.log("bookInterview interview", interview); // interview = { student: 'sam', interviewer: 3}
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    setState((prev) => ({
+      ...prev,
+      appointments,
+    }));
+  }
   
   return (
     <main className="layout">
