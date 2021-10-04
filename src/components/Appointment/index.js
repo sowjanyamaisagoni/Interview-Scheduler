@@ -13,6 +13,7 @@ const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 
 function Appointment(props) {
   const { id, time, interview, interviewers } = props;
@@ -33,6 +34,10 @@ function Appointment(props) {
   function confirmRemove() {
     transition(CONFIRM);
   }
+  function onEdit() {
+    transition(EDIT);
+  }
+
 
   return (
     <article className="appointment">
@@ -44,6 +49,7 @@ function Appointment(props) {
           student={interview.student}
           interviewer={interview.interviewer}
           onDelete={confirmRemove}
+          onEdit={onEdit}
         />
       )}
       {mode === CREATE && (
@@ -55,6 +61,15 @@ function Appointment(props) {
           message={"Delete your booking?"}
           onCancel={back}
           onConfirm={remove}
+        />
+      )}
+      {mode === EDIT && (
+        <Form
+          name={interview.student}
+          interviewer={interview.interviewer.id}
+          interviewers={interviewers}
+          onCancel={back}
+          onSave={save}
         />
       )}
     </article>
