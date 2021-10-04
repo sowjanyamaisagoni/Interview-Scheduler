@@ -24,7 +24,6 @@ export default function Application() {
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
     ]).then((all) => {
-      console.log('all', all);
       setState((prev) => ({
         ...prev,
         days: all[0].data,
@@ -38,8 +37,6 @@ export default function Application() {
   
     const appointments = getAppointmentsForDay(state, state.day).map((appointment) => {
       const interview = getInterview(state, appointment.interview);
-      console.log("getInterview interview", interview);
-      console.log("appointment", appointment);
 
       return (
         <Appointment
