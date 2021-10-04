@@ -23,6 +23,11 @@ function Appointment(props) {
     transition(SAVING);
     props.bookInterview(id, interview).then(() => transition(SHOW));
   }
+  
+  function remove() {
+    transition(EMPTY);
+    props.cancelInterview(id);
+  }
 
   return (
     <article className="appointment">
@@ -30,7 +35,7 @@ function Appointment(props) {
       {/* {interview ? (<Show student={interview.student} interviewer={interview.interviewer} onEdit onDelete />) : (<Empty onAdd/> )} */}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
-        <Show student={interview.student} interviewer={interview.interviewer} />
+        <Show student={interview.student} interviewer={interview.interviewer} onDelete={remove} />
       )}
       {mode === CREATE && (
         <Form interviewers={interviewers} onCancel={back} onSave={save} />

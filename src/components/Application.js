@@ -48,13 +48,12 @@ export default function Application() {
           interview={getInterview(state, appointment.interview)}
           interviewers={getInterviewersForDay(state, state.day)}
           bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
         />
       );
     });
   
   function bookInterview(id, interview) {
-    console.log("bookInterview id", id); // id = 2
-    console.log("bookInterview interview", interview); // interview = { student: 'sam', interviewer: 3}
 
     const appointment = {
       ...state.appointments[id],
@@ -72,14 +71,40 @@ export default function Application() {
         interview,
       })
       .then((res) => {
-        console.log("axios.put res: \n", res);
+        setState((prev) => ({
+          ...prev,
+          appointments,
+        }));
+      }); 
+  }
+  
+  function cancelInterview(id) {
+    // console.log('cancelInterview id:', id);
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    return axios
+      .delete(`/api/appointments/${id}`, {
+        ...state.appointments[id],
+        interview: null,
+      })
+      .then((res) => {
+        // console.log('axios.put res: \n', res);
         setState((prev) => ({
           ...prev,
           appointments,
         }));
       });
   }
-  
+
   return (
     <main className="layout">
       <section className="sidebar">
