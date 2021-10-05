@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 function useApplicationData() {
@@ -9,7 +9,15 @@ function useApplicationData() {
     interviewers: {},
   });
 
-  const setDay = (day) => setState((prevState) => ({ ...prevState, day }));
+   const setDay = (day) => setState((prevState) => ({ ...prevState, day }));
+   
+   const setSpotsForDay = (targetDay, newSpots) =>
+     setState((prev) => ({
+       ...prev,
+       days: prev.days.map((day) =>
+         day.name === targetDay ? { ...day, spots: newSpots } : day
+       ),
+     }));
 
   const bookInterview = (id, interview) => {
     // id = 2, interview = {student: 'sam', interviewer: 3}
@@ -48,7 +56,27 @@ function useApplicationData() {
     });
   };
 
-  return { state, setState, setDay, bookInterview, cancelInterview };
+  useEffect(() => {
+    const spotsRemaining = () => {
+      state.days.forEach((day) => {
+        const newSpotsRemaining = day.appointments
+          .map((apptId) => state.appointments[apptId].interview)
+          .filter((item) => item === null).length;
+
+        setSpotsForDay(day.name, newSpotsRemaining);
+      });
+    };
+
+    spotsRemaining();
+  }, [state.appointments]);
+
+  return {
+    state,
+    setState,
+    setDay,
+    bookInterview,
+    cancelInterview,
+  };
 }
 
 export default useApplicationData;
