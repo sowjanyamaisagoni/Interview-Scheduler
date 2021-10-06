@@ -5,20 +5,20 @@ import Button from "components/Button";
 
 function Form(props) {
   const { interviewers } = props;
-   const [name, setName] = useState(props.name || "");
+  const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
-   const reset = () => {
-     setName("");
-     setInterviewer(null);
-   };
+  const reset = () => {
+    setName("");
+    setInterviewer(null);
+  };
 
-   const cancel = () => {
-     reset();
-     props.onCancel();
-   };
-  
+  const cancel = () => {
+    reset();
+    props.onCancel();
+  };
+
   const validate = () => {
     if (name === "") {
       setError("Student name cannot be blank");
