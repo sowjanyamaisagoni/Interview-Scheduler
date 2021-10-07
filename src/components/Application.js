@@ -17,9 +17,11 @@ function Application(props) {
 
   useEffect(() => {
     Promise.all([
+      
       axios.get("/api/days"),
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
+      
     ]).then((all) => {
       setState((prev) => ({
         ...prev,
