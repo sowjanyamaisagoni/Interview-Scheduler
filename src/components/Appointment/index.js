@@ -27,7 +27,7 @@ function Appointment(props) {
       student: name,
       interviewer,
     };
-    transition(SAVING, true);
+    transition(SAVING);
     props
       .bookInterview(id, interview)
       .then(() => transition(SHOW))
@@ -84,7 +84,7 @@ function Appointment(props) {
         />
       )}
       {(mode === ERROR_DELETE || mode === ERROR_SAVE) && (
-        <Error onClose={back} message={"Please try again"} />
+        <Error onClose={() => { back();}} message={"Please try again"} />
       )}
     </article>
   );
